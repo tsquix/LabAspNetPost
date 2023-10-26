@@ -1,0 +1,16 @@
+﻿@model Post
+
+<h1>Utwórz post</h1>
+<form asp-controller="Post" asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Content">Zawartość</label>
+        <input class="form-control" asp-for="Content" />
+        <span class="text-danger" asp-validation-for="Content"></span>
+    </div>
+
+    <!-- Pozostałe pola formularza, takie jak Author, PublicationDate, Tags, Comment -->
+
+    <div class="mb-3">
+        <button type="submit" class="btn-primary">Utwórz</button>
+    </div>
+</form>

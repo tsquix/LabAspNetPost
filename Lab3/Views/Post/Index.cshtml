@@ -1,0 +1,43 @@
+﻿@model Dictionary<int, Post>
+
+<h1>Lista postów</h1>
+<a class="btn btn-primary" asp-controller="Post" asp-action="Create">Utwórz post</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Zawartość</th>
+            <th>Autor</th>
+            <th>Tagi</th>
+            <th>Komentarz</th>
+            <th>Data publikacji</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Value.Content
+                </td>
+                <td>
+                    @item.Value.Author
+                </td>
+                <td>
+                    @item.Value.Tags
+                </td>
+                <td>
+                    @item.Value.Comment
+                </td>
+                
+                <td>
+                        @item.Value.PublicationDate.ToString("yyyy-MM-dd")
+                <td>
+                    <a class="btn btn-outline-primary" asp-controller="Post" asp-action="Update" asp-route-id="@item.Key">Edytuj</a>
+                    <a class="btn btn-outline-danger" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Key">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,31 @@
+﻿@model Post
+
+<h1>Utwórz nowy post</h1>
+<form asp-controller="Post" asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Content">Zawartość</label>
+        <input asp-for="Content" class="form-control" />
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Author">Autor</label>
+        <input asp-for="Author" class="form-control" />
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Tags">Tagi</label>
+        <input asp-for="Tags" class="form-control" />
+        <span asp-validation-for="Tags" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Comment">Komentarz</label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PublicationDate">Data publikacji</label>
+        <input asp-for="PublicationDate" class="form-control" type="date" />
+        <span asp-validation-for="PublicationDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Utwórz</button>
+</form>
