@@ -1,4 +1,5 @@
 using Labolatorium_3.Models;
+using Labolatorium3.Models;
 
 namespace Labolatorium_3 {
     public class Program { 
@@ -10,9 +11,11 @@ namespace Labolatorium_3 {
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddSingleton<IContactService, MemoryContactService>();
+        builder.Services.AddSingleton<IPostService, MemoryPostService>();
+
         builder.Services.AddSingleton<IDateTimeProvider, CurrentDateTimeProvider>();
 
-            var app = builder.Build();
+        var app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())

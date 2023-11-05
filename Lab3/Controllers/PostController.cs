@@ -8,12 +8,18 @@ namespace Labolatorium_3.Controllers
 {
     public class PostController : Controller
     {
-        static readonly Dictionary<int, Post> _posts = new Dictionary<int, Post>();
-        static int id = 1;
+        //static readonly Dictionary<int, Post> _posts = new Dictionary<int, Post>();
+        //static int id = 1;
+        private readonly IPostService _postService;
+
+        public PostController(IPostService postService)
+        {
+            _postService = postService;
+        }
 
         public IActionResult Index()
         {
-            return View(_posts);
+            return View(_postService.FindAll());
         }
 
         [HttpGet]
@@ -27,17 +33,20 @@ namespace Labolatorium_3.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.Id = id++;
-                _posts[model.Id] = model;
+                model.PublicationDate = DateTime.Now; 
+                _postService.Add(model);
                 return RedirectToAction("Index");
             }
-            return View();
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            return View(_posts[id]);
+            return View(_postService.FindById(id));
         }
 
         [HttpPost]
@@ -45,23 +54,29 @@ namespace Labolatorium_3.Controllers
         {
             if (ModelState.IsValid)
             {
-                _posts[model.Id] = model;
+                model.PublicationDate = DateTime.Now; 
+                _postService.Update(model);
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(_posts[id]);
+            return View(_postService.FindById(id));
         }
 
         [HttpPost]
         public IActionResult Delete(Post model)
         {
-            _posts.Remove(model.Id);
+            _postService.Delete(model.Id);
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            return View(_postService.FindById(id));
         }
     }
 }

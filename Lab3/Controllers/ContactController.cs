@@ -53,7 +53,7 @@ namespace Labolatorium_3.Controllers
             if (ModelState.IsValid)
             {
                 _contactService.Update(model);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             return View();
         }
@@ -61,18 +61,17 @@ namespace Labolatorium_3.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var contact = _contactService.FindById(id);
-            if (contact == null)
-            {
-                return NotFound();
-            }
-            return View(contact);
+            return View(_contactService.FindById(id));
         }
         [HttpPost]
         public IActionResult Delete(Contact model)
         {
             _contactService.Delete(model.Id);
             return RedirectToAction("Index");
+        }
+        public IActionResult Details(int id)
+        {
+            return View(_contactService.FindById(id));
         }
     } 
 }
