@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Laboratorium_3.Models;
+using Labolatorium_3.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Laboratorium_3.Controllers
+namespace Labolatorium_3.Controllers
 {
     public class PostController : Controller
     {

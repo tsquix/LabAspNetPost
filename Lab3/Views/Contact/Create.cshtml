@@ -1,13 +1,20 @@
-﻿@model Contact
+﻿@using Labolatorium_3.Models;
+@model Contact
 
 <h1>Dodaj kontakt</h1>
 <form asp-controller="Contact" asp-action="Create" method="post">
     <div class="mb-3">
-        <label asp-for="Name">Imię</label>
+        <label asp-for="Name"></label>
         <input class="form-control" asp-for="Name" />
         <span class="text-danger" asp-validation-for="Name"></span>
     </div>
-
+    <div>
+        <label asp-for="Priority"></label>
+        <div>
+            <span asp-validation-for="Priority" class="text-danger"></span>
+        </div>
+        <select class="form-control" asp-for="Priority" asp-items="@Html.GetEnumSelectList<Priority>()"></select>
+    </div>
     <div class="mb-3">
         <label asp-for="Email">Email</label>
         <input class="form-control" asp-for="Email" />

@@ -1,17 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Laboratorium_3.Models;
-using System.Reflection;
 
-namespace Laboratorium_3.Controllers
+using System.Reflection;
+using Labolatorium_3.Models;
+
+namespace Labolatorium_3.Controllers
 {
     public class ContactController : Controller
     {
-        static readonly Dictionary<int, Contact> _contacts = new Dictionary<int, Contact>();
-        static int id = 1;
+        //static readonly Dictionary<int, Contact> _contacts = new Dictionary<int, Contact>();
+        //static int id = 1;
+        private readonly IContactService _contactService;
+
+        public ContactController(IContactService contactService)
+        {
+            _contactService = contactService;
+        }
+
         public IActionResult Index()
         {
-            return View(_contacts);
+            return View(_contactService.FindAll());
         }
+
 
         [HttpGet]
         public IActionResult Create()
@@ -22,19 +31,20 @@ namespace Laboratorium_3.Controllers
         [HttpPost]
         public IActionResult Create(Contact model)
         {
-           if (ModelState.IsValid)
-           {
-               model.Id = id++;
-                _contacts[model.Id] = model;
-               return RedirectToAction("Index");
-           }
-            return View();
+            if (ModelState.IsValid)
+            {
+                _contactService.Add(model);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(model);
+            }
         }
-
         [HttpGet]
         public IActionResult Update(int id)
         {
-            return View(_contacts[id]);
+            return View(_contactService.FindById(id));
         }
 
         [HttpPost]
@@ -42,8 +52,8 @@ namespace Laboratorium_3.Controllers
         {
             if (ModelState.IsValid)
             {
-                _contacts[model.Id] = model;
-                return RedirectToAction("Index");
+                _contactService.Update(model);
+                return RedirectToAction(nameof(Index));
             }
             return View();
         }
@@ -51,15 +61,19 @@ namespace Laboratorium_3.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(_contacts[id]);
+            var contact = _contactService.FindById(id);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+            return View(contact);
         }
-
         [HttpPost]
         public IActionResult Delete(Contact model)
         {
-            _contacts.Remove(model.Id);
+            _contactService.Delete(model.Id);
             return RedirectToAction("Index");
         }
-    }
+    } 
 }
  
